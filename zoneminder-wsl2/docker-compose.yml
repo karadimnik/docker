@@ -1,0 +1,27 @@
+version: '3.1'
+services:
+    zoneminder:
+        container_name: zoneminder
+        image: zoneminderhq/zoneminder:latest-ubuntu18.04
+        restart: unless-stopped
+        ports:
+            - 7878:80
+        network_mode: "host"
+        privileged: true
+        shm_size: 1G
+        environment:
+            - TZ=${TZ:-Europe/Athens}
+        volumes:
+            - /mnt/e/docker-hdd/docker-data/zoneminder/events:/var/cache/zoneminder/events
+            - /mnt/e/docker-hdd/docker-data/zoneminder/images:/var/cache/zoneminder/images
+            - /mnt/e/docker-hdd/docker-data/zoneminder/logs:/var/log/zm
+            - mysql:/var/lib/mysql
+        devices:
+            - /dev/dri
+        stdin_open: true 
+        tty: true            
+volumes:
+#   events:
+#   images:
+#   logs:        
+    mysql:
